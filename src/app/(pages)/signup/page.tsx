@@ -64,7 +64,7 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup", // Update to appropriate signup URL
+        "http://localhost:5000/api/auth/signup", 
         userData
       );
       console.log("Form Submitted Successfully, Response: ", response.status, response.data.token);
