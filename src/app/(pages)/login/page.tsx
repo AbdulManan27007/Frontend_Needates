@@ -62,9 +62,11 @@ const Login = () => {
       if (response.status === 200) {
         // Redirect to the dashboard upon successful login
         router.push("/hoteldetail");
+        alert("Login successful!");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      alert("Login Failed!! Try Again");
     }
   };
 

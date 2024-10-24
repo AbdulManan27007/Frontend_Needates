@@ -1,23 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation"; // Import useSearchParams for extracting query params
 import Image from "next/image";
 import axios from "axios";
 import { FormSideImg } from "@/app/components/FornSideImg";
 import { SubmitButtons } from "@/app/components/SubmitButtons";
 import { Inputs } from "@/app/components/Inputs";
-import { FormTopBar } from "@/app/components/FormTopBar";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io"; // Importing icons for password visibility
 
 const ResetNewPassword = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
-    useState(false);
-  const [password, setPassword] = useState("");
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     password: "",
   });
+  const [token, setToken] = useState("");
+
+  const searchParams = useSearchParams(); // Get search params
+
+  useEffect(() => {
+    const tokenFromParams = searchParams.get("token"); // Extract token from query params
+    if (tokenFromParams) {
+      setToken(tokenFromParams);
+    }
+  }, [searchParams]);
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -49,11 +57,12 @@ const ResetNewPassword = () => {
 
     const userData = {
       password: formData.password,
+      token, // Send the token along with the password
     };
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/auth/reset-password?token=${resetToken}`, // Provide the correct URL here
+        `http://localhost:5000/api/auth/reset-password/${token}`, 
         userData
       );
       console.log(
@@ -75,11 +84,9 @@ const ResetNewPassword = () => {
           <div className="w-full max-w-[741px] bg-white rounded-[15px] flex items-center justify-center">
             <div className="w-full max-w-[542px] flex flex-col justify-center items-center py-3 md:py-0">
               <div className="text-center font-sans font-bold pt-[55px] text-[16px] md:text-[24px] text-dark-black leading-[42px]">
-               
-                  <h1 className="font-bold font-sans text-[23px] text-black leading-8 ">
-                    Set new password
-                  </h1>
-              
+                <h1 className="font-bold font-sans text-[23px] text-black leading-8 ">
+                  Set new password
+                </h1>
               </div>
 
               <form

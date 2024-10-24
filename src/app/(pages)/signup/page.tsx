@@ -68,6 +68,7 @@ const SignUp = () => {
         userData
       );
       console.log("Form Submitted Successfully, Response: ", response.status, response.data.token);
+      alert("User has been created successfully");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
