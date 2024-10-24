@@ -7,7 +7,7 @@ import Image from "next/image";
 import axios from "axios"; 
 
 const SignUp = () => {
-  //password visibility
+  //password visibility h
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   //confirm password
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =useState(false);
