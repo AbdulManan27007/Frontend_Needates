@@ -21,9 +21,11 @@ const ResetNewPassword = () => {
   const searchParams = useSearchParams(); // Get search params
 
   useEffect(() => {
-    const tokenFromParams = searchParams.get("token"); // Extract token from query params
-    if (tokenFromParams) {
-      setToken(tokenFromParams);
+    if (typeof window !== "undefined") {
+      const tokenFromParams = searchParams.get("token"); // Extract token from query params
+      if (tokenFromParams) {
+        setToken(tokenFromParams);
+      }
     }
   }, [searchParams]);
 
@@ -61,8 +63,9 @@ const ResetNewPassword = () => {
     };
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const response = await axios.post(
-        `http://localhost:5000/api/auth/reset-password/${token}`, 
+        `${apiUrl}/api/auth/reset-password/${token}`,
         userData
       );
       console.log(
@@ -167,3 +170,6 @@ const ResetNewPassword = () => {
 };
 
 export default ResetNewPassword;
+
+// Optional: force dynamic rendering to avoid prerendering issues
+export const dynamic = 'force-dynamic';
