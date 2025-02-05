@@ -9,6 +9,7 @@ import axios from "axios";
 
 const HotelDetails = () => {
   const router = useRouter();
+  const [image, setImage] = useState('')
   const [formData, setFormData] = useState({
     hotelName: "",
     address: "",
@@ -29,6 +30,21 @@ const HotelDetails = () => {
       [name]: value,
     });
   };
+//Handle Image
+function handleFileChange(e){
+  console.log(e.target.files)
+  setImage(e.target.files[0])
+}
+
+function handleFileChange(){
+  const formData = new FormData()
+  formData.append('picture',image)
+  axios.post('url', formData).then((res)=>{
+    console.log(res)
+  })
+
+}
+
 
   //Handle Submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -136,7 +152,7 @@ const HotelDetails = () => {
                     id="fileInput"
                     type="file"
                     className="hidden"
-                    // onChange={handleFileChange}
+                    onChange={handleFileChange}
                   />
                 </label>
                 <h1 className="font-sans font-normal text-[16px] text-black leading-[26px] pt-[30px]">
